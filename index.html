@@ -670,7 +670,6 @@
 </head>
 <body>
 
-    <!-- Sticky Header -->
     <header>
         <div class="header-brand">
             <div class="header-logo">Eccles <span>MBA</span></div>
@@ -680,7 +679,6 @@
     </header>
 
     <div class="app-container">
-        <!-- Sidebar Navigation -->
         <aside>
             <button class="nav-btn active" onclick="switchView('view-questions', this)">
                 Question Bank
@@ -696,10 +694,8 @@
             </button>
         </aside>
 
-        <!-- Main Content Area -->
         <main>
             
-            <!-- VIEW: QUESTION BANK -->
             <section id="view-questions" class="view-section active">
                 <div class="hero">
                     <div class="hero-eyebrow">Product Track · PM Interview Preparation</div>
@@ -726,7 +722,6 @@
                     </div>
                 </div>
 
-                <!-- Filter Controls -->
                 <div class="filter-panel">
                     <input type="text" class="search-bar" id="search-input" placeholder="Search questions, frameworks, or core keywords..." oninput="applyFilters()">
                     
@@ -752,13 +747,10 @@
                     </div>
                 </div>
 
-                <!-- Question Cards Destination -->
                 <div class="question-list" id="questions-container">
-                    <!-- Dynamic rendering via JavaScript -->
-                </div>
+                    </div>
             </section>
 
-            <!-- VIEW: FRAMEWORKS -->
             <section id="view-frameworks" class="view-section">
                 <div class="section-header">
                     <h2 class="section-title">Product Management Frameworks</h2>
@@ -887,7 +879,6 @@
                 </div>
             </section>
 
-            <!-- VIEW: BATTLECARD -->
             <section id="view-battlecard" class="view-section">
                 <div class="section-header">
                     <h2 class="section-title">PM Interview Battlecard</h2>
@@ -979,7 +970,6 @@
                 </div>
             </section>
 
-            <!-- VIEW: RED FLAGS -->
             <section id="view-redflags" class="view-section">
                 <div class="section-header">
                     <h2 class="section-title">PM Interview Red Flags</h2>
@@ -1032,7 +1022,6 @@
         </main>
     </div>
 
-    <!-- Practice / Audio Tracking Modal -->
     <div class="modal-overlay" id="practice-modal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1067,7 +1056,6 @@
         </div>
     </div>
 
-    <!-- Core Script Logic Layer -->
     <script>
         // Phase 1 High-Fidelity Data Architecture
         const PM_QUESTIONS = [
@@ -1150,7 +1138,7 @@
                 deepdive: "1. STRUCTURED NARRATIVE: Connect your past professional experience directly to your post-MBA career goals using a clear, logical narrative arc.\n2. VALUE ADD: Clearly explain how your unique pre-MBA skills give you an advantage when tackling complex product challenges.\n3. ECCLES CONNECTIONS: Highlight how your business school training has prepared you to manage product roadmaps, analyze financial tradeoffs, and align cross-functional teams.\n4. COMPANY ALIGNMENT: Show that you understand the business model and engineering goals of the specific company you are interviewing with.",
                 coaching: "Keep your career transition story clear and focused. Connect your past experience, your MBA training, and your future career goals into a cohesive narrative that shows why you are a great fit for the role.",
                 redFlag: "Giving a generic answer like 'I want to be the CEO of the product' shows an unrealistic view of the collaborative role of a product manager."
-            },
+            }, // <-- THE MISSING COMMA HAS BEEN FIXED HERE
             {
                 id: 9,
                 category: "Product Sense & Customer Empathy",
@@ -1391,7 +1379,7 @@
                 coaching: "Focus on how you used objective data and user research to influence the leader's perspective. Show that you respect senior leadership while remaining committed to making data-driven product choices.",
                 redFlag: "Giving up on your product vision immediately when challenged by a leader, or arguing back based purely on your personal opinion without providing data, reveals weak leadership skills."
             }
-            // INSERT BATCH 3 HERE (Questions 41-70)
+            // INSERT BATCH 3 HERE (Questions 33-65)
             // INSERT BATCH 4 HERE (Questions 71-100)
         ];
 
