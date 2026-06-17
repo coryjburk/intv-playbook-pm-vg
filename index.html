@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eccles MBA — Product Management Interview Playbook</title>
+    <style>
+        :root {
+            --primary: #CC0000;
+            --primary-hover: #990000;
+            --accent: #c9a84c;
+            --accent-hover: #b0913b;
+            --bg-dark: #0f0f12;
+            --bg-card: #1a1a24;
+            --bg-input: #252533;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #2d2d3d;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Sticky Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(15, 15, 18, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .header-logo span {
+            color: var(--primary);
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-left: 1px solid var(--border);
+            padding-left: 1rem;
+        }
+
+        .track-pill {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Layout Structure */
+        .app-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Sidebar Navigation */
+        aside {
+            width: 280px;
+            background-color: #14141c;
+            border-right: 1px solid var(--border);
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            overflow-y: auto;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.85rem 1rem;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .nav-btn.active {
+            background-color: rgba(204, 0, 0, 0.15);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1;
+            padding: 3rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        /* Hero Area */
+        .hero {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2.5rem;
+        }
+
+        .hero-eyebrow {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        /* Hero Stats */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Controls / Filters */
+        .filter-panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            min-width: 100px;
+        }
+
+        .filter-pill {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .filter-pill:hover {
+            border-color: var(--text-muted);
+            color: var(--text-main);
+        }
+
+        .filter-pill.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .search-bar {
+            width: 100%;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.8rem 1.2rem;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Question Cards */
+        .question-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .q-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .q-card:hover {
+            border-color: rgba(203, 168, 76, 0.4);
+        }
+
+        .q-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .q-meta-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .q-badges {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-difficulty {
+            background-color: #2e2e3e;
+            color: var(--text-main);
+        }
+
+        .badge-difficulty.foundational { color: #34d399; }
+        .badge-difficulty.core { color: #f59e0b; }
+        .badge-difficulty.advanced { color: #ef4444; }
+
+        .badge-cat {
+            background-color: rgba(201, 168, 76, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .q-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .q-toggle-icon {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+        }
+
+        .q-card.expanded .q-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .q-body {
+            display: none;
+            border-top: 1px solid var(--border);
+            background-color: rgba(15, 15, 18, 0.4);
+        }
+
+        .q-card.expanded .q-body {
+            display: block;
+        }
+
+        /* Answer Tabs System */
+        .tab-bar {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background-color: #161620;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background-color: rgba(201, 168, 76, 0.05);
+        }
+
+        .tab-btn.tab-redflag.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: rgba(204, 0, 0, 0.05);
+        }
+
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Structured Typography for content */
+        .prose p {
+            margin-bottom: 1rem;
+        }
+        .prose ul, .prose ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background-color: var(--bg-input);
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .redflag-box {
+            background-color: rgba(204, 0, 0, 0.05);
+            border: 1px solid rgba(204, 0, 0, 0.2);
+            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .card-actions {
+            padding: 1rem 2rem;
+            border-top: 1px solid var(--border);
+            background-color: #14141c;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: #0f0f12;
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Generic Section Styling */
+        .section-header {
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 900px;
+        }
+
+        /* Frameworks & Battlecard Accordion Grids */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .info-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-card-title.red-title {
+            color: var(--primary);
+        }
+
+        /* Practice Modal Layout */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-window {
+            background-color: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 850px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            background-color: #14141c;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .audio-controls-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .record-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .record-btn.recording {
+            background-color: #dc2626;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .filler-stat-box {
+            background-color: var(--bg-input);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+
+        .response-textarea {
+            width: 100%;
+            height: 180px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .prompt-output-box {
+            background-color: #0f0f12;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .prompt-header-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .prompt-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            color: #d1d5db;
+        }
+
+        .modal-footer {
+            background-color: #14141c;
+            padding: 1.25rem 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header>
+        <div class="header-brand">
+            <div class="header-logo">Eccles <span>MBA</span></div>
+            <div class="header-subtitle">Product Management · Interview Playbook</div>
+        </div>
+        <div class="track-pill">PM Track</div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside>
+            <button class="nav-btn active" onclick="switchView('view-questions', this)">
+                Question Bank
+            </button>
+            <button class="nav-btn" onclick="switchView('view-frameworks', this)">
+                Product Management Frameworks
+            </button>
+            <button class="nav-btn" onclick="switchView('view-battlecard', this)">
+                PM Interview Battlecard
+            </button>
+            <button class="nav-btn" onclick="switchView('view-redflags', this)">
+                PM Interview Red Flags
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            <!-- VIEW: QUESTION BANK -->
+            <section id="view-questions" class="view-section active">
+                <div class="hero">
+                    <div class="hero-eyebrow">Product Track · PM Interview Preparation</div>
+                    <h1 class="hero-title">Product Management Mastery.</h1>
+                    <p class="hero-description">100 product management interview questions with model answers, product thinking frameworks, case-style practice, coaching insights, and recruiter red flags. Built for Eccles MBA students targeting Associate Product Manager, Product Manager, Product Strategy, Product Operations, Growth Product Manager, and product-adjacent leadership roles.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="stat-val" id="stat-total-count">0</div>
+                            <div class="stat-lbl">Total Questions Available</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val">8</div>
+                            <div class="stat-lbl">Categories Covered</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val">3</div>
+                            <div class="stat-lbl">Difficulty Tiers</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val">10</div>
+                            <div class="stat-lbl">Core Frameworks Built-In</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="filter-panel">
+                    <input type="text" class="search-bar" id="search-input" placeholder="Search questions, frameworks, or core keywords..." oninput="applyFilters()">
+                    
+                    <div class="filter-row">
+                        <div class="filter-label">Difficulty:</div>
+                        <button class="filter-pill active" data-filter-type="difficulty" data-value="all" onclick="toggleFilter(this)">All</button>
+                        <button class="filter-pill" data-filter-type="difficulty" data-value="Foundational" onclick="toggleFilter(this)">Foundational</button>
+                        <button class="filter-pill" data-filter-type="difficulty" data-value="Core" onclick="toggleFilter(this)">Core</button>
+                        <button class="filter-pill" data-filter-type="difficulty" data-value="Advanced" onclick="toggleFilter(this)">Advanced</button>
+                    </div>
+
+                    <div class="filter-row">
+                        <div class="filter-label">Category:</div>
+                        <button class="filter-pill active" data-filter-type="category" data-value="all" onclick="toggleFilter(this)">All Categories</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Product Sense & Customer Empathy" onclick="toggleFilter(this)">Product Sense</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Product Strategy" onclick="toggleFilter(this)">Product Strategy</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Execution & Metrics" onclick="toggleFilter(this)">Execution & Metrics</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Prioritization & Roadmapping" onclick="toggleFilter(this)">Prioritization</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Product Design & User Experience" onclick="toggleFilter(this)">UX & Design</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Analytics & Experimentation" onclick="toggleFilter(this)">Analytics</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Stakeholder Management & Leadership" onclick="toggleFilter(this)">Leadership</button>
+                        <button class="filter-pill" data-filter-type="category" data-value="Behavioral & Career Motivation" onclick="toggleFilter(this)">Behavioral</button>
+                    </div>
+                </div>
+
+                <!-- Question Cards Destination -->
+                <div class="question-list" id="questions-container">
+                    <!-- Dynamic rendering via JavaScript -->
+                </div>
+            </section>
+
+            <!-- VIEW: FRAMEWORKS -->
+            <section id="view-frameworks" class="view-section">
+                <div class="section-header">
+                    <h2 class="section-title">Product Management Frameworks</h2>
+                    <p class="section-desc">The structured product thinking approaches every PM candidate should know cold. Use these frameworks to answer product sense, execution, strategy, analytics, prioritization, and behavioral PM interview questions with clarity and confidence.</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="info-card">
+                        <div class="info-card-title">1. CIRCLES Method for Product Design</div>
+                        <div class="prose">
+                            <p><strong>C</strong>omprehend Situation (Goals, constraints, context)</p>
+                            <p><strong>I</strong>dentify Customer (User personas, archetypes)</p>
+                            <p><strong>R</strong>eport Needs (User journeys, pain points, JTBD)</p>
+                            <p><strong>C</strong>ut Prioritization (Pick the highest ROI pain point)</p>
+                            <p><strong>L</strong>ist Solutions (Brainstorm 3+ novel structural capabilities)</p>
+                            <p><strong>E</strong>valuate Trade-offs (Assess via impact, complexity, risks)</p>
+                            <p><strong>S</strong>ummarize Recommendation (Core feature, metrics, next step)</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">2. RICE Prioritization</div>
+                        <div class="prose">
+                            <p>A rigorous math-based framework to defend roadmapping decisions:</p>
+                            <p>$$\text{Score} = \frac{\text{Reach} \times \text{Impact} \times \text{Confidence}}{\text{Effort}}$$</p>
+                            <ul>
+                                <li><strong>Reach:</strong> Estimate users impacted over a set timeframe.</li>
+                                <li><strong>Impact:</strong> Massive (3), High (2), Medium (1), Low (0.5).</li>
+                                <li><strong>Confidence:</strong> Data-supported (100%), Speculative (50%).</li>
+                                <li><strong>Effort:</strong> Person-months or engineering sprints required.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">3. North Star Metric Framework</div>
+                        <div class="prose">
+                            <p>The single key metric that best captures the core value your product delivers to customers, tied directly to long-term business scale.</p>
+                            <p><strong>Structural Elements:</strong></p>
+                            <ul>
+                                <li><strong>Breadth:</strong> How many users execute this actions?</li>
+                                <li><strong>Depth:</strong> To what degree do they interact?</li>
+                                <li><strong>Frequency:</strong> How often do they repeat it?</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">4. AARRR Funnel Framework</div>
+                        <div class="prose">
+                            <p>The classic growth engineering lifecycle blueprint:</p>
+                            <ul>
+                                <li><strong>Acquisition:</strong> Landing users via channels.</li>
+                                <li><strong>Activation:</strong> The "Aha!" moment of immediate value.</li>
+                                <li><strong>Retention:</strong> Repeat visits over a defined cohort window.</li>
+                                <li><strong>Referral:</strong> Organic virality coefficients ($K > 1$).</li>
+                                <li><strong>Revenue:</strong> Monetization streams, LTV mapping.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">5. Jobs To Be Done (JTBD)</div>
+                        <div class="prose">
+                            <p>Shifting focus away from user traits to the core progress a user tries to achieve.</p>
+                            <p><em>"When I am [Situation], I want to [Action/Motivation], so that I can achieve [Desired Outcome]."</em></p>
+                            <p>Focuses on replacing incumbent baseline habits with structural digital efficiencies.</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">6. Opportunity Solution Tree</div>
+                        <div class="prose">
+                            <p>Visual pathing popularized by Teresa Torres to prevent point-solution validation:</p>
+                            <ul>
+                                <li><strong>Clear Business Outcome:</strong> The leading lag target.</li>
+                                <li><strong>Opportunities:</strong> Discovering core user friction blocks.</li>
+                                <li><strong>Solutions:</strong> Multiple theoretical routes to capture value.</li>
+                                <li><strong>Experiments:</strong> De-risking assumptions via microtests.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">7. Product Strategy Cascade</div>
+                        <div class="prose">
+                            <p>Derived from Lafley & Martin, modified for digital tech:</p>
+                            <p><strong>1. What is our winning aspiration?</strong> (Vision statement)</p>
+                            <p><strong>2. Where will we play?</strong> (Target market segments, tech surfaces)</p>
+                            <p><strong>3. How will we win?</strong> (Moats, differentiators, value prop)</p>
+                            <p><strong>4. What capabilities must be in place?</strong> (Tech, datasets, flywheels)</p>
+                            <p><strong>5. What management systems are required?</strong> (KPI architectural frameworks)</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">8. Experiment Design Framework</div>
+                        <div class="prose">
+                            <p>For high-stakes testing questions:</p>
+                            <ul>
+                                <li><strong>Hypothesis:</strong> "If we build X for user Y, behavior Z changes."</li>
+                                <li><strong>Cohort Selection:</strong> Control vs. treatment split criteria.</li>
+                                <li><strong>Primary Metric:</strong> Clear proxy for success.</li>
+                                <li><strong>Guardrail Metric:</strong> Ensuring no damage to monetization or retention.</li>
+                                <li><strong>Runtime/Statistical Rigor:</strong> Power analysis calculation.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">9. Stakeholder Alignment Framework</div>
+                        <div class="prose">
+                            <p>Managing competing interests cross-functionally:</p>
+                            <ul>
+                                <li><strong>Engineering:</strong> Feasibility, tech debt, security, velocity.</li>
+                                <li><strong>Design:</strong> Usability, accessibility, consistency.</li>
+                                <li><strong>Data Science:</strong> Tracking instrumentation, bias mitigation.</li>
+                                <li><strong>Legal/Compliance:</strong> Risk bounds, privacy protocols (GDPR).</li>
+                                <li><strong>Sales/Marketing:</strong> GTM message, customer commitment management.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">10. Root Cause Analysis (Metric Drops)</div>
+                        <div class="prose">
+                            <p>Triage logic when metrics shift radically:</p>
+                            <ul>
+                                <li><strong>Data Integrity Check:</strong> Tracking tags broken?</li>
+                                <li><strong>External Variables:</strong> Seasonality, competitors, macro trends, regulations.</li>
+                                <li><strong>Internal Variables:</strong> Buggy app updates, marketing campaigns, server timeouts.</li>
+                                <li><strong>Segmentation Breakdowns:</strong> Platform (iOS vs Android), Geography, Cohort tier.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: BATTLECARD -->
+            <section id="view-battlecard" class="view-section">
+                <div class="section-header">
+                    <h2 class="section-title">PM Interview Battlecard</h2>
+                    <p class="section-desc">Your quick-reference cheat sheet. Review before every product management interview, case screen, recruiter call, and final-round product panel.</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="info-card">
+                        <div class="info-card-title">1. Must Know PM Concepts</div>
+                        <div class="prose">
+                            <ul>
+                                <li><strong>Network Effects:</strong> Product value jumps with user volume scale.</li>
+                                <li><strong>Technical Debt:</strong> Trading structural agility for short-term shipping speeds.</li>
+                                <li><strong>API / Microservices:</strong> Modern modular tech components.</li>
+                                <li><strong>Cold Start Problem:</strong> Solving initial low liquidity on two-sided marketplace setups.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">2. Product Sense Power Phrases</div>
+                        <div class="prose">
+                            <ul>
+                                <li><em>"Let's anchor on the specific user persona who experiences the most acute friction..."</em></li>
+                                <li><em>"To avoid feature-factory thinking, I want to prioritize the underlying user problem before mapping tech solutions."</em></li>
+                                <li><em>"The core structural tradeoff here is immediate conversion vs. long-term algorithmic engagement."</em></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">3. Metrics to Know Cold</div>
+                        <div class="prose">
+                            <ul>
+                                <li><strong>LTV / CAC Ratio:</strong> Product unit economics standard ($\ge 3:1$).</li>
+                                <li><strong>DAU / MAU:</strong> Critical app engagement density metric.</li>
+                                <li><strong>Churn Rate:</strong> Percentage of users exiting subscription models.</li>
+                                <li><strong>NPS / CSAT:</strong> Measures of user sentiment and experience health.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">4. Prioritization Principles</div>
+                        <div class="prose">
+                            <ul>
+                                <li>Never state "I just use my gut." Anchor framework logic cleanly.</li>
+                                <li>Balance immediate optimization with structural investments.</li>
+                                <li>Assess options along two vectors: impact on core North Star vs. engineering complexity.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">5. Common PM Interview Mistakes</div>
+                        <div class="prose">
+                            <ul>
+                                <li>Jumping straight into solutions without choosing a user persona.</li>
+                                <li>Proposing standard features (e.g., adding an AI chatbot to everything).</li>
+                                <li>Failing to mention risks, engineering constraints, or business viability.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">6. Strong Candidate Signals</div>
+                        <div class="prose">
+                            <ul>
+                                <li>Structured synthesis with notes taken smoothly during prompts.</li>
+                                <li>Comfort handling technical complexity and edge case realities.</li>
+                                <li>Using explicit product and business vocabulary instead of hand-waving concepts.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">7. Final-Round Differentiators</div>
+                        <div class="prose">
+                            <ul>
+                                <li>Demonstrating deep knowledge of the specific company's ecosystem and api limitations.</li>
+                                <li>Connecting user design choices to long-term monetization loops.</li>
+                                <li>Emphasizing strong collaboration methods with engineering partners.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title">8. Last-Minute Review</div>
+                        <div class="prose">
+                            <ul>
+                                <li>Review the target company's current core growth metrics.</li>
+                                <li>Prepare 3 flexible behavioral stories detailing cross-functional friction management.</li>
+                                <li>Calm down, take your time, and communicate step-by-step.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: RED FLAGS -->
+            <section id="view-redflags" class="view-section">
+                <div class="section-header">
+                    <h2 class="section-title">PM Interview Red Flags</h2>
+                    <p class="section-desc">The specific answers and behaviors that weaken Product Management candidates — including vague product thinking, weak prioritization, poor metric selection, lack of customer empathy, and inability to connect decisions to business outcomes.</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="info-card">
+                        <div class="info-card-title red-title">1. Weak Product Sense</div>
+                        <p class="prose">The candidate immediately starts building generic features without identifying target user segments or analyzing underlying pain points.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">2. Poor Customer Empathy</div>
+                        <p class="prose">Defining users simply by broad demographic data instead of identifying their specific motivations, daily workflows, or points of friction.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">3. Metric Confusion</div>
+                        <p class="prose">Relying on vanity metrics like total downloads instead of using down-funnel behavioral data like retention rates and user activation metrics.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">4. Vague Prioritization</div>
+                        <p class="prose">Using ambiguous logic like "I'd pick this because it sounds coolest" rather than applying structured frameworks like RICE or impact-effort matrices.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">5. Strategy Without Tradeoffs</div>
+                        <p class="prose">Claiming a strategic approach can maximize speed, minimize costs, and maintain perfect quality all at the same time without making hard choices.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">6. Overbuilding / Feature Factory Thinking</div>
+                        <p class="prose">Proposing complex systems and multiple features right away instead of designing a lean MVP to test key assumptions first.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">7. Weak Cross-Functional Leadership</div>
+                        <p class="prose">Treating engineering teams as just execution resources rather than involving them early as strategic product development partners.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">8. Shallow Business Understanding</div>
+                        <p class="prose">Designing great user experiences that fail to account for company monetization models, unit economics, or market realities.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">9. Poor Communication Structure</div>
+                        <p class="prose">Ramshackle, stream-of-consciousness monologues that lack structured frameworks, summaries, or clear strategic takeaways.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title red-title">10. Behavioral Interview Weaknesses</div>
+                        <p class="prose">Taking all the credit for team successes or blaming cross-functional partners when talking about past project failures.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Practice / Audio Tracking Modal -->
+    <div class="modal-overlay" id="practice-modal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <div class="modal-title">Live Interview Simulator & AI Coach</div>
+                <button class="modal-close" onclick="closePracticeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--accent);">Target Prompt:</h4>
+                    <p id="modal-question-text" style="font-weight: 600; font-size: 1.05rem;"></p>
+                </div>
+
+                <div class="audio-controls-row">
+                    <button class="record-btn" id="record-action-btn" onclick="toggleRecording()">
+                        <span>🎤</span> Start Voice Answer
+                    </button>
+                    <div class="filler-stat-box">Um/Uh Count: <span id="filler-um-count" style="color: var(--primary);">0</span></div>
+                    <div class="filler-stat-box">Like/So Count: <span id="filler-like-count" style="color: var(--accent);">0</span></div>
+                </div>
+
+                <textarea class="response-textarea" id="response-text-entry" placeholder="Your verbal response transcript will generate here automatically via Speech Recognition, or you can paste your response notes directly here to evaluate framing strategy..." oninput="manuallyEvaluateFillerWords()"></textarea>
+
+                <div class="prompt-output-box">
+                    <div class="prompt-header-label">[PRODUCT MANAGEMENT INTERVIEW COACHING — ECCLES MBA]</div>
+                    <button class="btn btn-accent" style="position: absolute; top: 1rem; right: 1rem; font-size: 0.8rem; padding: 0.4rem 0.8rem;" onclick="copyAiPrompt()">Copy Full Engineering Prompt</button>
+                    <div class="prompt-text" id="generated-prompt-box">Click "Start Voice Answer" above or paste text to build your structured evaluation data bundle...</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background-color: var(--bg-input); border: 1px solid var(--border); color: var(--text-main);" onclick="closePracticeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Script Logic Layer -->
+    <script>
+        // Phase 1 High-Fidelity Data Architecture
+        const PM_QUESTIONS = [
+            {
+                id: 1,
+                category: "Product Sense & Customer Empathy",
+                difficulty: "Advanced",
+                question: "How would you design a specialized travel product specifically targeted at remote tech workers?",
+                conversational: "To tackle this, I want to look at remote workers who travel frequently. Unlike typical tourists, these users require reliable infrastructure for productivity alongside their leisure activities. I would target 'Digital Nomad Tech Professionals'—individuals with high disposable income who spend 2 to 6 months per year working away from their main base. Their primary pain points center around infrastructure reliability, loneliness, and compliance issues like taxes and visas. I'd focus on the infrastructure problem: the sudden loss of high-speed internet or quiet working spaces before critical executive syncs. My proposed MVP is 'Eccles NomadPass'—a verified accommodation platform paired with a managed hardware mesh kit. The key value proposition is guaranteed 200 Mbps uptime and access to certified workspaces within a 5-minute walk. We would prioritize this because reliable work infrastructure is a foundational requirement before these users can focus on community or local leisure activities.",
+                deepdive: "1. STRATEGIC CONTEXT: The market for remote workers is growing rapidly post-pandemic. High-income tech professionals need deep productivity support, not just standard vacation rentals.\n2. USER SEGMENTATION: We can split this market into three groups: Occasional Workationers (1-2 weeks), Cross-Country Van-Lifers, and Global Nomads (6+ months abroad). Let's target Global Nomads because their structural pain points around infrastructure and compliance are the most intense.\n3. SOLUTION DEEP DIVE: The NomadPass ecosystem features three key components: Verified connectivity metrics via IoT testing devices, localized community channels linked to workspace access, and integrated visa/tax calculation trackers.\n4. TRADEOFFS: Verifying properties manually increases costs and slows supply growth. We trade rapid marketplace scaling for reliable quality assurance.\n5. EDGE CASES: Mitigating connectivity issues caused by local grid failures by providing portable satellite internet backups.",
+                coaching: "Strong answers will clearly distinguish 'remote working' requirements from standard holiday travel patterns. Focus on highlighting specific operational challenges, such as the need for continuous productivity uptime and reliable workspace environments. Keep your user segment tightly defined to avoid generic feature lists.",
+                redFlag: "Avoid proposing generic travel platforms that just add an 'office' filter checkbox. This shows a lack of deep empathy for the unique day-to-day challenges remote workers face."
+            },
+            {
+                id: 2,
+                category: "Product Strategy",
+                difficulty: "Advanced",
+                question: "Should Apple launch a dedicated smart hardware line for the premium home kitchen automation market?",
+                conversational: "I'll evaluate this strategy by analyzing Apple's core business model, which pairs premium hardware ecosystems with high-margin services to drive user retention. The kitchen remains an uncoordinated hub with fragmented ecosystems. However, entering major home appliances runs against Apple's strengths in high-volume, compact consumer devices. Instead of building large appliances, Apple should focus on a premium smart hub and ambient sensors that coordinate existing appliances through HomeKit partnerships. This approach lets Apple control the core user experience, privacy tools, and subscription services without taking on the heavy supply chain overhead of large kitchen hardware.",
+                deepdive: "1. STRATEGIC CONTEXT: Apple thrives on high margins, premium design, and deep ecosystem lock-in. The kitchen market has long replacement cycles (10+ years), which directly challenges Apple's usual 2-3 year hardware upgrade cadence.\n2. VALUE PROP: Position Apple as the private, secure operating system for the home, managing kitchen coordination without storing user lifestyle data on public servers.\n3. MONETIZATION: Earn revenue through premium HomeKit licensing fees, subscription services for health and nutrition planning, and specialized smaller hardware items like smart ambient kitchen sensors.\n4. RISKS & TRADEOFFS: Entering this space could strain developer relationships if Apple directly competes with partners who build smart kitchen appliances.\n5. EXECUTION STEP: Launch a specialized kitchen hub device that integrates with services like Apple Fitness+ for nutrition and automated grocery ordering via Apple Pay.",
+                coaching: "To deliver an executive-level strategic answer, evaluate the product opportunity against the company's existing business model, core capabilities, and financial goals. Do not just focus on features; analyze market size, replacement cycles, and supply chain realities.",
+                redFlag: "Failing to consider how long appliance lifecycles affect hardware replacement cadences shows a lack of strategic business understanding."
+            },
+            {
+                id: 3,
+                category: "Execution & Metrics",
+                difficulty: "Core",
+                question: "YouTube Shorts views have increased 15% year-over-year, but user comments have dropped 10%. How would you investigate this trend?",
+                conversational: "I'll systematically investigate this by first verifying data integrity with our analytics teams to ensure tracking tags aren't broken. If the data is correct, a 15% increase in views alongside a 10% drop in comments suggests that engagement is shifting toward passive viewing rather than active participation. I would segment this data by geographic region, device type, and platform versions to isolate the change. If this trend occurs everywhere, it likely stems from a product change. For example, the auto-advance feature might be moving users to the next video too quickly, or changes to the UI layout could be hiding the comment button. I will partner with engineering to review recent interface changes and deployment cycles.",
+                deepdive: "1. DIAGNOSTIC PIPELINE: First, confirm that tracking systems are functioning properly. Next, rule out external seasonal changes or major competitor shifts. Finally, analyze internal product updates.\n2. SEGMENTATION STRATEGY: Breakdown metrics across iOS vs. Android, specific app updates, user cohorts, and creators. This helps determine if the drop is driven by power users or casual viewers.\n3. STRATEGIC TRADEOFFS: Higher total views mean more ad impressions, but lower comment rates indicate weaker community engagement over time. We need to decide if immediate consumption is worth sacrificing long-term retention.\n4. POTENTIAL RECOVERY ACTIONS: Run an A/B test that pauses video auto-advance while a user has the comment section open, or experiment with inline comment previews to encourage interactions.",
+                coaching: "Structure your response clearly. Start with data verification, move to external and internal factors, and then outline your data segmentation strategy. This demonstrates a reliable, analytical approach to problem-solving.",
+                redFlag: "Immediately jumping to solutions like 'running a comment sweepstakes' without identifying the root cause of the metric change indicates weak analytical skills."
+            },
+            {
+                id: 4,
+                category: "Prioritization & Roadmapping",
+                difficulty: "Core",
+                question: "As the PM for Airbnb Experiences, how would you prioritize an AI Itinerary Builder, a Group Booking Split-Payment feature, and an Automated Host ID Verification tool?",
+                conversational: "I would prioritize these features by evaluating them against Airbnb's current strategic focus: increasing total completed bookings while managing operational risks. I'll use a modified RICE framework to score each opportunity. The Automated Host ID Verification tool should be our first priority. While it has low visibility for guests, it addresses a critical security bottleneck that impacts host onboarding times and platform trust. Group Booking Split-Payments comes next; it directly addresses a major checkout friction point for group travel, offering high reach and conversion impact. The AI Itinerary Builder goes last. Although it has strong marketing appeal, its conversion impact remains unproven and it requires high engineering effort compared to the other features.",
+                deepdive: "1. COMPREHENSIVE PRIORITIZATION MATRIX:\n- Host Verification: High confidence, low effort, high risk-reduction impact. This fixes a structural onboarding bottleneck.\n- Split Payments: High reach, medium effort, high conversion impact. This solves a tangible, widespread financial friction point.\n- AI Itinerary Builder: High effort, low initial confidence, speculative value. This requires complex model training.\n2. TARGET METRICS: The host verification tool aims to reduce onboarding time. Split payments targets shopping cart abandonment rates. The AI builder focuses on top-of-funnel engagement.\n3. TRADEOFFS: Postponing the AI builder means losing out on early marketing buzz, but it ensures engineering resources are focused on high-confidence conversion and safety features.",
+                coaching: "Use structured frameworks like RICE to show how you evaluate features objectively. Explain the tradeoffs clearly, demonstrating that you prioritize team focus and business impact over trendiness.",
+                redFlag: "Prioritizing the AI tool simply because it uses new technology, without evaluating its actual business value or engineering costs, reveals weak roadmapping skills."
+            },
+            {
+                id: 5,
+                category: "Product Design & User Experience",
+                difficulty: "Core",
+                question: "How would you improve the ride-sharing pickup experience for visually impaired users on Uber?",
+                conversational: "I'll frame this design challenge by focusing on the unique pain points visually impaired users face during the pickup phase. While audio navigation works well during the matching stage, the real issue occurs when the car arrives. The user has to locate the exact vehicle in a crowded area without visual cues. I would focus on 'completely blind independent commuters.' Their biggest challenge is identifying the right car and communicating their exact location to the driver without sight. I suggest adding a feature called 'Acoustic Beacon.' This lets the user activate a unique sound and haptic pattern on the driver's phone or car speaker through their app. At the same time, the driver's phone vibrates in patterns that match the passenger's proximity, making it easier for both parties to locate each other.",
+                deepdive: "1. CONTEXT: Accessibility features often improve the product experience for all users. For example, clear audio cues also help distracted or hurried riders.\n2. USER JOURNEY PAIN POINTS: The journey breaks down into three phases: Requesting the ride (solved via screen readers), Locating the vehicle (major friction point), and Entering the car securely.\n3. SOLUTION SPACE: Options include vehicle color text descriptions (useless for this segment), automated text messaging (high friction), or localized hardware/audio solutions like the Acoustic Beacon.\n4. OPERATIONAL TRADEOFFS: Sending audio signals through car speakers requires integrations with Apple CarPlay and Android Auto, which increases technical complexity across different vehicle models.\n5. METRICS: Success will be measured by reductions in pickup wait times and lower ride cancellation rates for this user segment.",
+                coaching: "When answering design questions, clearly state your target user persona and their specific pain points before brainstorming features. Choose a distinct, high-impact solution and explain how it handles real-world constraints.",
+                redFlag: "Suggesting visual solutions like 'making the screen text larger' when designing for visually impaired users reveals a lack of user empathy."
+            },
+            {
+                id: 6,
+                category: "Analytics & Experimentation",
+                difficulty: "Advanced",
+                question: "Design an experiment to test an ad-supported tier for Spotify Premium without cannibalizing existing paid subscribers.",
+                conversational: "Our goal is to offer a lower-priced, ad-supported tier to attract budget-conscious users while protecting our high-margin Premium subscriber base. The main risk is that existing Premium users might downgrade to save money. To test this, I would run an experiment targeting only free tier users and past churned subscribers in a specific market. We will exclude current active Premium members from the test completely. We'll split the target audience into a control group, which sees the standard free tier experience, and a treatment group, which gets access to the new ad-supported tier. We will run the test for 3 months to monitor conversion rates and long-term engagement habits.",
+                deepdive: "1. EXPERIMENTAL DESIGN: Target users who are unlikely to downgrade, such as long-term free tier members or recently cancelled subscribers.\n2. CORE METRICS: The primary success metric is the increase in Average Revenue Per User (ARPU) among free users. Our key guardrail metric is the stable conversion rate of free users moving to full Premium.\n3. STATISTICAL VALIDITY: Use power analysis to determine the appropriate sample size. We'll track performance over multiple billing cycles to account for changes in user behavior.\n4. POTENTIAL RISKS: Users might find workarounds to access the cheaper tier. We can mitigate this by limiting features, such as capping offline downloads or reducing audio quality on the lower tier.",
+                coaching: "Clearly define your experiment parameters. Explain how you select target cohorts, isolate variables, and use guardrail metrics to protect the core business from negative impacts.",
+                redFlag: "Failing to include guardrail metrics to track subscription revenue cannibalization shows an incomplete understanding of product experimentation."
+            },
+            {
+                id: 7,
+                category: "Stakeholder Management & Leadership",
+                difficulty: "Foundational",
+                question: "How do you handle a situation where the engineering lead refuses to build a feature, claiming it is technically unfeasible, but data shows it is the top request from enterprise customers?",
+                conversational: "I would handle this by avoiding conflict and instead focusing on understanding the underlying technical challenges. I'd sit down with the engineering lead to learn exactly why the feature is considered unfeasible. Often, 'unfeasible' means it would create too much tech debt, create security risks, or require a complete rewrite of our database architecture. Once I understand the technical constraints, I will share the customer data to show the business impact, explaining that this feature affects a significant portion of our enterprise revenue. Then, we can work together to find an alternative solution. We might build a simpler version of the feature or adjust our existing database layout to deliver 80% of the customer value with much less technical risk.",
+                deepdive: "1. COGNITIVE FRAMEWORK: Good product managers view engineers as strategic partners, not resources to be ordered around. Technical limitations are simply boundaries to work within.\n2. COLLABORATION STEPS: Review the system architecture together to identify the specific bottlenecks. Share customer feedback directly with the team to build shared empathy for the user's problem.\n3. COMPROMISE STRATEGIES: Explore modular alternatives, such as using third-party API integrations or running a manual backend process to test the feature before committing to full development.\n4. LONG-TERM VALUE: This approach maintains strong team trust, reduces technical risk, and keeps the product roadmap aligned with real business opportunities.",
+                coaching: "Emphasize collaboration and mutual respect. Show that you can balance technical realities with business needs by working with engineering to find creative, scaled-down alternatives.",
+                redFlag: "Saying you would escalate the issue to leadership to force engineers to build the feature shows poor cross-functional management skills."
+            },
+            {
+                id: 8,
+                category: "Behavioral & Career Motivation",
+                difficulty: "Foundational",
+                question: "Why do you want to transition from your pre-MBA background into Product Management, and why are you interested in our company specifically?",
+                conversational: "Before my MBA, I worked in data analytics, where I loved uncovering insights but felt limited because I couldn't use that data to shape product roadmaps or drive business strategy. I chose to get my MBA at the Eccles School to build my skills in strategic frameworks, corporate finance, and cross-functional leadership. Product Management is the perfect fit because it allows me to combine my analytical background with business strategy to solve real user problems. I want to join your company specifically because your team focuses on solving complex logistics challenges. My analytical experience and strategic training prepare me well to help optimize your platform workflows and improve operational efficiency.",
+                deepdive: "1. STRUCTURED NARRATIVE: Connect your past professional experience directly to your post-MBA career goals using a clear, logical narrative arc.\n2. VALUE ADD: Clearly explain how your unique pre-MBA skills give you an advantage when tackling complex product challenges.\n3. ECCLES CONNECTIONS: Highlight how your business school training has prepared you to manage product roadmaps, analyze financial tradeoffs, and align cross-functional teams.\n4. COMPANY ALIGNMENT: Show that you understand the business model and engineering goals of the specific company you are interviewing with.",
+                coaching: "Keep your career transition story clear and focused. Connect your past experience, your MBA training, and your future career goals into a cohesive narrative that shows why you are a great fit for the role.",
+                redFlag: "Giving a generic answer like 'I want to be the CEO of the product' shows an unrealistic view of the collaborative role of a product manager."
+            }
+            // INSERT BATCH 2 HERE (Questions 9-40)
+            // INSERT BATCH 3 HERE (Questions 41-70)
+            // INSERT BATCH 4 HERE (Questions 71-100)
+        ];
+
+        // Global State Engine
+        let activeCategoryFilter = 'all';
+        let activeDifficultyFilter = 'all';
+
+        // Initialization
+        document.addEventListener("DOMContentLoaded", () => {
+            renderQuestions();
+            updateGlobalCounters();
+        });
+
+        function updateGlobalCounters() {
+            document.getElementById('stat-total-count').innerText = PM_QUESTIONS.length;
+        }
+
+        // View Toggling Engine
+        function switchView(targetSectionId, element) {
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(targetSectionId).classList.add('active');
+            element.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Card Render Engine
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
+            const filtered = PM_QUESTIONS.filter(q => {
+                const matchCat = (activeCategoryFilter === 'all' || q.category === activeCategoryFilter);
+                const matchDiff = (activeDifficultyFilter === 'all' || q.difficulty === activeDifficultyFilter);
+                const matchSearch = (
+                    q.question.toLowerCase().includes(searchTerm) || 
+                    q.conversational.toLowerCase().includes(searchTerm) ||
+                    q.deepdive.toLowerCase().includes(searchTerm)
+                );
+                return matchCat && matchDiff && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-muted);">No matching product management questions found. Clear filters or adjust search criteria.</div>`;
+                return;
+            }
+
+            filtered.forEach(q => {
+                const card = document.createElement('div');
+                card.className = 'q-card';
+                card.id = `q-card-${q.id}`;
+                card.innerHTML = `
+                    <div class="q-header" onclick="toggleCardExpansion(${q.id})">
+                        <div class="q-meta-block">
+                            <div class="q-badges">
+                                <span class="badge badge-difficulty ${q.difficulty.toLowerCase()}">${q.difficulty}</span>
+                                <span class="badge badge-cat">${q.category}</span>
+                            </div>
+                            <h3 class="q-title">${q.id}. ${q.question}</h3>
+                        </div>
+                        <div class="q-toggle-icon">▼</div>
+                    </div>
+                    <div class="q-body">
+                        <div class="tab-bar">
+                            <button class="tab-btn active" onclick="switchCardTab(event, ${q.id}, 'conversational')">Conversational MBA Answer</button>
+                            <button class="tab-btn" onclick="switchCardTab(event, ${q.id}, 'deepdive')">Deep Dive Frameworks</button>
+                            <button class="tab-btn" onclick="switchCardTab(event, ${q.id}, 'coaching')">Coaching Insights</button>
+                            <button class="tab-btn tab-redflag" onclick="switchCardTab(event, ${q.id}, 'redflag')">Recruiter Red Flags</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="tab-content-${q.id}-conversational">
+                            <div class="prose">
+                                <p style="font-style: italic; color: var(--accent); margin-bottom: 1rem;">Live Interview Delivery:</p>
+                                <p>${q.conversational}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="tab-content-${q.id}-deepdive">
+                            <div class="prose" style="white-space: pre-wrap;">${q.deepdive}</div>
+                        </div>
+                        
+                        <div class="tab-content" id="tab-content-${q.id}-coaching">
+                            <div class="highlight-box">
+                                <strong>Eccles Leadership Coaching Note:</strong>
+                                <p style="margin-top:0.5rem;" class="prose">${q.coaching}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="tab-content-${q.id}-redflag">
+                            <div class="redflag-box">
+                                <strong>Recruiter Evaluation Warning:</strong>
+                                <p style="margin-top:0.5rem;" class="prose">${q.redFlag}</p>
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="btn btn-accent" onclick="openPracticeModal(${q.id})">Practice Audio Simulation</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // UI Interactions
+        function toggleCardExpansion(id) {
+            const card = document.getElementById(`q-card-${id}`);
+            card.classList.toggle('expanded');
+        }
+
+        function switchCardTab(event, id, tabType) {
+            event.stopPropagation();
+            const card = document.getElementById(`q-card-${id}`);
+            
+            card.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            card.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            card.querySelector(`#tab-content-${id}-${tabType}`).classList.add('active');
+        }
+
+        function toggleFilter(element) {
+            const row = element.parentElement;
+            row.querySelectorAll('.filter-pill').forEach(pill => pill.classList.remove('active'));
+            element.classList.add('active');
+
+            const type = element.getAttribute('data-filter-type');
+            const val = element.getAttribute('data-value');
+
+            if (type === 'category') activeCategoryFilter = val;
+            if (type === 'difficulty') activeDifficultyFilter = val;
+
+            renderQuestions();
+        }
+
+        function applyFilters() {
+            renderQuestions();
+        }
+
+        // Voice Engine & Simulator Setup
+        let recognition = null;
+        let isRecording = false;
+        let activeQuestionIdForModal = null;
+
+        function openPracticeModal(questionId) {
+            activeQuestionIdForModal = questionId;
+            const targetQObj = PM_QUESTIONS.find(q => q.id === questionId);
+            document.getElementById('modal-question-text').innerText = `${targetQObj.id}. ${targetQObj.question}`;
+            document.getElementById('response-text-entry').value = '';
+            document.getElementById('filler-um-count').innerText = '0';
+            document.getElementById('filler-like-count').innerText = '0';
+            document.getElementById('generated-prompt-box').innerText = 'Awaiting transcript or manual notation entry...';
+            
+            document.getElementById('practice-modal').classList.add('active');
+            buildDynamicCoachingPrompt('', 0, 0);
+        }
+
+        function closePracticeModal() {
+            if (isRecording) stopSpeechStream();
+            document.getElementById('practice-modal').classList.remove('active');
+        }
+
+        function toggleRecording() {
+            if (!isRecording) {
+                startSpeechStream();
+            } else {
+                stopSpeechStream();
+            }
+        }
+
+        function startSpeechStream() {
+            const SpeechContract = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechContract) {
+                alert("The Web Speech API is not natively supported by your current browser. Please utilize modern Google Chrome or paste text inputs manually.");
+                return;
+            }
+
+            recognition = new SpeechContract();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = () => {
+                isRecording = true;
+                const btn = document.getElementById('record-action-btn');
+                btn.classList.add('recording');
+                btn.innerHTML = `<span>⏹</span> Stop & Analyze`;
+            };
+
+            recognition.onerror = (e) => { console.error("Speech engine failure: ", e.error); };
+
+            recognition.onend = () => {
+                isRecording = false;
+                const btn = document.getElementById('record-action-btn');
+                btn.classList.remove('recording');
+                btn.innerHTML = `<span>🎤</span> Start Voice Answer`;
+            };
+
+            recognition.onresult = (event) => {
+                let completeTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        completeTranscript += event.results[i][0].transcript + ' ';
+                    }
+                }
+                if (completeTranscript.trim().length > 0) {
+                    const txtArea = document.getElementById('response-text-entry');
+                    txtArea.value += completeTranscript;
+                    manuallyEvaluateFillerWords();
+                }
+            };
+
+            recognition.start();
+        }
+
+        function stopSpeechStream() {
+            if (recognition) {
+                recognition.stop();
+            }
+            isRecording = false;
+        }
+
+        function manuallyEvaluateFillerWords() {
+            const content = document.getElementById('response-text-entry').value;
+            
+            const umMatches = content.match(/\b(um|uh|ahm|uhm)\b/gi) || [];
+            const likeMatches = content.match(/\b(like|so|basically|actually|you\sknow)\b/gi) || [];
+            
+            document.getElementById('filler-um-count').innerText = umMatches.length;
+            document.getElementById('filler-like-count').innerText = likeMatches.length;
+
+            buildDynamicCoachingPrompt(content, umMatches.length, likeMatches.length);
+        }
+
+        function buildDynamicCoachingPrompt(userAnswer, umCount, likeCount) {
+            const targetQ = PM_QUESTIONS.find(q => q.id === activeQuestionIdForModal);
+            if (!targetQ) return;
+
+            const totalFillers = umCount + likeCount;
+
+            const structuredPrompt = `You are an elite executive MBA interview coach for the University of Utah David Eccles School of Business. Evaluate the following candidate's live audio interview response for structured product thinking.
+
+[INTERVIEW QUESTION]
+Category: ${targetQ.category}
+Difficulty: ${targetQ.difficulty}
+Question Prompt: ${targetQ.question}
+
+[MODEL CONVERSATIONAL REFERENCE]
+${targetQ.conversational}
+
+[DEEP-DIVE ARCHITECTURE & CRITERIA]
+${targetQ.deepdive}
+
+[CANDIDATE TRANSCRIPT UNDER EVALUATION]
+"${userAnswer || "[No input recorded yet. Evaluate purely based on target structures if requested]"}"
+
+[TRACKED VERBAL FLUIDITY METRICS]
+- Um/Uh Count: ${umCount}
+- Like/So/Filler Words: ${likeCount}
+
+Evaluate the response across these criteria:
+- Product thinking
+- Customer empathy
+- Problem framing
+- Prioritization logic
+- Metric selection
+- Business impact
+- Communication clarity
+- Executive presence
+
+You must return your feedback using this exact markdown layout structure below:
+
+**What Worked**
+[Provide 1-2 specific strengths — cite what the student said, not generic praise]
+
+**Top 2 Improvements**
+1. [Most critical gap vs. model answer + how to fix with specific language]
+2. [Second gap + actionable fix]
+
+**Power Move**
+[One advanced PM insight from the deep-dive notes that would elevate the answer]
+
+${totalFillers > 0 ? `**Filler Word Note**\nThe candidate used ${totalFillers} vocal filler words (${umCount} um/uh, ${likeCount} organic discourse markers). Provide a swift tactical recommendation on pausing to regain executive pacing.` : ''}`;
+
+            document.getElementById('generated-prompt-box').innerText = structuredPrompt;
+        }
+
+        function copyAiPrompt() {
+            const textToCopy = document.getElementById('generated-prompt-box').innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Premium AI Evaluator prompt copied to clipboard successfully! Paste this directly into Gemini or your enterprise LLM interface for real-time grading.");
+            }).catch(err => {
+                console.error('Failed to execute clipboard print operations: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
